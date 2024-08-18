@@ -1,0 +1,66 @@
+@charset "ISO-8859-1";
+.container mt-4{
+	display: flex;
+	flex-wrap: wrap;
+}
+.table-title {
+    background:#23282b;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    left: 0;
+    padding: 10px 30px;
+    border-radius: 0px 0px 0 0;
+    z-index: 2; /* Asegura que table-title esté por encima de table-striped */
+}
+.table-title .btn{
+		   color:#fff;
+		   float:right;
+		   margin-right: 20px;
+		   font-size:18px;
+		   border:none;
+		   min-width:50px;
+		   border-radius:10px;
+		   border:none;
+		   outline:none!important;
+		   margin-left:10px;
+		   padding: 10px 20px;
+	   }
+
+		body {
+			background-color: #f8f9fa;
+			/* Agrega un color de fondo a la página */
+		}
+
+		 .container1 {
+			width: 225px;
+			margin-right:30px ;
+			margin-top: 50px;
+
+
+			/* Ajusta el margen superior para centrar la tabla */
+		}
+		.container2 {
+
+			width: 225px;
+			margin-top: 50px;
+			/* Ajusta el margen superior para centrar la tabla */
+		}
+
+/*cambia el tamaño del cuadro select*/
+.select2-container .select2-selection--single {
+    height: 38px !important;
+
+	align-items: center;
+	display: flex;
+}
+
+form div label{
+	font-size: 20px;
+}
+
+
+
+
+

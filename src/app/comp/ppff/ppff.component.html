@@ -1,0 +1,117 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Agrega un color de fondo a la página */
+        }
+
+        .container {
+            margin-top: 50px; /* Ajusta el margen superior para centrar la tabla */
+        }
+    </style>
+
+<div class="container mt-4">
+  <div class="modal fade" id="personalModal" tabindex="-1" aria-labelledby="personalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="personalModalLabel">{{insUpd ? 'Nuevo PPFF' : 'Editar PPFF'}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #PersonalForm="ngForm" (ngSubmit)="agregar(); PersonalForm.reset()">
+            <div class="form-group">
+              <input [(ngModel)]="ppff.id_ppff" name="id_ppff" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Nombre Padre de Familia</label>
+              <input [(ngModel)]="ppff.nombre_ppff" name="nombre_ppff" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Apellido Padre de Familia</label>
+              <input [(ngModel)]="ppff.apellido_ppff" name="apellido_ppff" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>DNI</label>
+              <input [(ngModel)]="ppff.dni" name="dni" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Nombre Alumna</label>
+              <input [(ngModel)]="ppff.nombre_alu" name="nombre_alu" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Apellido Alumna</label>
+              <input [(ngModel)]="ppff.apellido_alu" name="apellido_alu" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Año Alumna</label>
+              <input [(ngModel)]="ppff.anio_alu" name="anio_alu" type="text" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">{{textoBoton}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-center mb-4">Lista de Padres de Familia</h2>
+
+  <div class="table-title">
+    <div class="row">
+      <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+        <h2 class="ml-lg-1">Módulo de Padres de Familia</h2>
+      </div>
+      <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-end">
+        <a (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#personalModal" type="button"
+        name="btn_nuevo" id="btn_nuevo" class="btn btn-success" >
+        <i class="bi bi-person-fill-add"></i>
+          <span>Agregar Nuevo Padre</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Id PPFF</th>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>DNI</th>
+        <th>Nombre Alumna</th>
+        <th>Apellido Alumna</th>
+        <th>Año Alumna</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (pf of ppffs; track pf.id_ppff){
+      <tr>
+        <td>{{pf.id_ppff}}</td>
+        <td>{{pf.nombre_ppff}}</td>
+        <td>{{pf.apellido_ppff}}</td>
+        <td>{{pf.dni}}</td>
+        <td>{{pf.nombre_alu}}</td>
+        <td>{{pf.apellido_alu}}</td>
+        <td>{{pf.anio_alu}}</td>
+        <td>
+          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#personalModal"
+                  (click)="editar(pf)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-danger" (click)="eliminar(pf)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+crossorigin="anonymous"></script>
+

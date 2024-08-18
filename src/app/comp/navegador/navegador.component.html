@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="/assets/static/css/style2.css">
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+<div class="sidebar close" [ngClass]="{'close': isSidebarClosed}">
+  <br>
+  <div class="logo-details">
+    <img src="/assets/static/images/Logo.png" alt="profileImg">
+    <span class="logo_name">Sor Rosa Larrabure</span>
+  </div>
+  <ul class="nav-links">
+    <li>
+      <a [routerLink]="['/inicio']">
+        <i class='bx bx-grid-alt' ></i>
+        <span class="link_name">Inicio</span>
+      </a>
+
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a th:href="@{/listarIngresoPC}" >
+          <i class='bx bx-collection'  ></i>
+          <span class="link_name">Personal Colegio</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow' (click)="toggleSubMenu($event)" ></i>
+      </div>
+      <ul class="sub-menu">
+
+        <li><a [routerLink]="['/PersonalColegio']">Listar Personal Colegio</a></li>
+        <li><a [routerLink]="['/IngresoPersonalColegio']" >Ingreso Personal</a></li>
+
+      </ul>
+    </li>
+    <li>
+      <div class="iocn-link">
+        <a th:href="@{/listarIPPFF}" >
+          <i class='bx bx-book-alt' ></i>
+          <span class="link_name">Padres de Familia</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow' (click)="toggleSubMenu($event)" ></i>
+      </div>
+      <ul class="sub-menu">
+
+        <li><a [routerLink]="['/PPFF']">Listado de Padres</a></li>
+        <li><a [routerLink]="['/IngresoPPFF']" >Ingreso Padres</a></li>
+        <li><a th:href="@{/usuario/registro}">Registrarse</a> |</li>
+      </ul>
+    </li>
+
+    <li>
+      <div class="iocn-link">
+        <a th:href="@{/listarIngresoPE}" >
+          <i class='bx bx-plug' ></i>
+          <span class="link_name">Persona Externa</span>
+        </a>
+        <i class='bx bxs-chevron-down arrow'(click)="toggleSubMenu($event)" ></i>
+      </div>
+      <ul class="sub-menu">
+        <li><a class="link_name" th:href="@{/listarIngresoPE}" >Persona Externa</a></li>
+        <li><a [routerLink]="['/PersonaExterna']">Listado de Personas</a></li>
+        <li><a [routerLink]="['/IngresoPE']" >Ingreso Persona Externa</a></li>
+
+      </ul>
+    </li>
+
+    <li>
+      <a href="#">
+        <i class='bx bx-cog' ></i>
+        <span class="link_name">Setting</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#">Setting</a></li>
+      </ul>
+    </li>
+    <li>
+  <div sec:authorize="isAuthenticated()" class="profile-details">
+    <div class="profile-content">
+      <img src="image/profile.jpg" alt="profileImg">
+    </div>
+    <div class="name-job">
+      <div sec:authentication="name" class="profile_name"></div>
+
+    </div>
+    <i (click)="logout()" class='bx bx-log-out'></i>
+    <form   method="POST" id="logoutForm">
+      <i onclick="document.getElementById('logoutForm').submit();"class='bx bx-log-out' ></i>
+    </form>
+
+  </div>
+</li>
+</ul>
+</div>
+<section class="home-section">
+  <div class="home-content">
+    <i class='bx bx-menu' (click)="toggleSidebar()"  ></i>
+    <span class="text">Desplegar Menú</span>
+  </div>
+
+  <br>
+
+
+</section>
+
+
+<script src="/assets/static/js/script.js"></script>
+
+
+
+
+

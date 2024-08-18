@@ -1,0 +1,151 @@
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { IngresopersonaexternaService } from '../../service/ingresopersonaexterna.service';
+import { PersonaexternaService } from '../../service/personaexterna.service';
+import { ToastrService } from 'ngx-toastr';
+import { Ipersonaexterna } from '../../model/iPersonaExterna';
+import { IngresopersonaE } from '../../model/ingresopersonaE';
+import { Personaexterna } from '../../model/personaexterna';
+import { IingresopersonaE } from '../../model/iIngresoPersonaE';
+import { CommonModule, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+
+@Component({
+  selector: 'app-ingreso-personaexterna',
+  standalone: true,
+  imports: [CommonModule, FormsModule,NgFor,NgSelectModule],
+  templateUrl: './ingreso-personaexterna.component.html',
+  styleUrl: './ingreso-personaexterna.component.css'
+})
+export class IngresoPersonaexternaComponent implements OnInit {
+
+
+
+constructor(private service:IngresopersonaexternaService, private servicePE: PersonaexternaService,
+    private toastr: ToastrService){}
+
+    personas : Ipersonaexterna[]=[];
+    textoBoton ="Agregar";
+    ingreso = new IngresopersonaE();
+    persona = new Personaexterna();
+    insUpd = true;
+    ingresos1: any[] = [];
+    fechaBusqueda: string = '';
+    idPersonaE: number | null = null;
+
+  ngOnInit(): void {
+    this.cargarIngresos();
+    this.getPersonas();
+    this.setCurrentTime();
+
+  }
+
+
+
+  setCurrentTime() {
+    const now = new Date();
+    const timeString = now.toTimeString().slice(0, 5); // Obtiene la hora en formato HH:MM
+    this.ingreso.hora_ingreso = timeString;
+    this.ingreso.hora_salida = timeString;
+  }
+
+
+  cargarIngresos(): void {
+    this.service.listarIngresoPE(this.fechaBusqueda, this.idPersonaE || undefined)
+      .subscribe(
+        (data: any) => {
+          this.ingresos1 = data;
+        },
+        (error: Error) => {
+          console.error('Error al cargar los ingresos:', error);
+        }
+      );
+  }
+  buscarPorFecha(): void {
+    this.idPersonaE = null;
+    this.cargarIngresos();
+  }
+  buscarPorId(): void {
+    this.fechaBusqueda = '';
+    this.cargarIngresos();
+  }
+
+  editar(ipe: IingresopersonaE) {
+    this.textoBoton = "Actualizar";
+    this.insUpd = false;
+    this.service.getIPE(ipe.id_ingresoPersonaE).subscribe(
+      (data: any) => {
+        this.ingreso = data;
+        // Abre el modal programáticamente
+      }
+    );
+  }
+
+  agregarIPE() {
+    if (this.insUpd) {
+      this.service.insertarIPE(this.ingreso).subscribe(
+        (resp) => {
+          this.cargarIngresos();
+          this.resetForm();
+          this.toastr.success('Ingreso agregado con éxito', 'Éxito');
+        },
+        (error) => {
+          console.error('Error al agregar Ingreso:', error);
+          this.toastr.error('No se pudo agregar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+        }
+      );
+    } else {
+      this.service.actualizarIPE(this.ingreso).subscribe(
+        (resp) => {
+          this.cargarIngresos();
+          this.resetForm();
+          this.toastr.success('Ingreso actualizado con éxito', 'Éxito');
+        },
+        (error) => {
+          console.error('Error al actualizar Ingreso:', error);
+          this.toastr.error('No se pudo actualizar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+        }
+      );
+    }
+  }
+
+  resetForm() {
+    this.ingreso = new IngresopersonaE();
+    this.insUpd = true;
+    this.textoBoton = "Agregar";
+    this.setCurrentTime();
+    // Cierra el modal programáticamente
+
+  }
+
+  eliminar(ipe: IingresopersonaE) {
+    if (confirm("¿Estás seguro de eliminar este empleado?")) {
+        this.service.eliminarIPE(ipe.id_ingresoPersonaE).subscribe(
+            () => {
+              this.cargarIngresos(); // Actualizar la lista después de eliminar
+                this.toastr.info('Ingreso Eliminado con éxito', 'Eliminado');
+            }
+        );
+    }
+  }
+
+  agregarPE()  {
+      this.servicePE.insertarPE(this.persona).subscribe(
+        (resp) => {
+          this.resetForm();
+          this.toastr.success('Padre agregado con éxito', 'Éxito');
+        },
+        (error) => {
+          console.error('Error al agregar Padre:', error);
+          this.toastr.error('No se pudo agregar el Padre. Por favor, inténtelo de nuevo.', 'Error');
+        }
+      );
+}
+
+getPersonas(){
+  this.servicePE.getPES().subscribe(
+    (data:any)=>this.personas=data
+  );
+}
+}

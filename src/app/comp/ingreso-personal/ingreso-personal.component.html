@@ -1,0 +1,182 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Agrega un color de fondo a la página */
+        }
+
+        .container {
+            margin-top: 50px; /* Ajusta el margen superior para centrar la tabla */
+        }
+    </style>
+
+<div class="container mt-4">
+  <div class="modal fade" id="personalModal" tabindex="-1" aria-labelledby="personalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="personalModalLabel">{{insUpd ? 'Nuevo Personal' : 'Editar Personal'}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #PersonalForm="ngForm" (ngSubmit)="agregarPC(); PersonalForm.reset()">
+            <div class="form-group">
+              <input [(ngModel)]="personal.id_personal" name="id_personal" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Nombre Personal</label>
+              <input [(ngModel)]="personal.nombre_personal" name="nombre_personal" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Apellido Personal</label>
+              <input [(ngModel)]="personal.apellido_personal" name="apellido_personal" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Cargo Personal</label>
+              <input [(ngModel)]="personal.cargo_personal" name="cargo_personal" type="text" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">{{textoBoton}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="modal fade" id="personalModal1" tabindex="-1" aria-labelledby="personalModalLabel1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="personalModalLabel1">{{insUpd ? 'Nuevo Personal' : 'Editar Personal'}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form #PersonalForm1="ngForm" (ngSubmit)="agregarIPC(); PersonalForm1.reset()">
+              <div class="form-group">
+                <input [(ngModel)]="ingreso.id_ingresoPersonal" name="id_ingresoPersonal" type="hidden" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Nombre Personal</label>
+                <ng-select [(ngModel)]="ingreso.personal" name="personal"  >
+                  @for (p of personales; track p.id_personal){
+                    <ng-option  [value]="p">{{p.nombre_personal}} {{p.apellido_personal}}</ng-option>
+                    }
+                </ng-select>
+              </div>
+              <div class="form-group">
+                <label>Fecha</label>
+                <input [(ngModel)]="ingreso.fecha" name="fecha" type="date" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Hora de Ingreso</label>
+                <input [(ngModel)]="ingreso.hora_ingreso" name="hora_ingreso" type="time" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Hora de Salida</label>
+                <input [(ngModel)]="ingreso.hora_salida" name="hora_salida" type="time" class="form-control" />
+              </div>
+              <button type="submit" class="btn btn-success">{{textoBoton}}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="text-center mb-4">Lista de Personal Colegio</h2>
+
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+          <h2 class="ml-lg-1">Módulo de Personal Colegio</h2>
+        </div>
+        <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-end">
+          <a (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#personalModal" type="button"
+          name="btn_nuevo" id="btn_nuevo" class="btn btn-primary" >
+          <i class="bi bi-person-fill-add"></i>
+            <span> Nuevo Personal</span>
+          </a>
+          <a (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#personalModal1" type="button"
+          name="btn_nuevo" id="btn_nuevo" class="btn btn-success" >
+          <i class="bi bi-person-fill-add"></i>
+            <span>Agregar Nueva Entrada</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div clas="buscar" style="display: flex">
+			<div class="container1">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorId()">
+							<div class="form-group">
+								<label for="fechaBusqueda">Buscar por nombre</label>
+								<ng-select [(ngModel)]="idPersonal" name="idPersonal"  >
+                  @for (p of personales; track p.id_personal){
+                    <ng-option  [value]="p.id_personal">{{p.nombre_personal}} {{p.apellido_personal}}</ng-option>
+                    }
+                </ng-select>
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="container2">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorFecha()">
+							<div class="form-group">
+								<label for="fechaBusqueda">Ingrese la fecha</label>
+								<input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
+									required />
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Numero</th>
+          <th>Nombres</th>
+          <th>Fecha</th>
+          <th>Hora de Ingreso</th>
+          <th>Hora de Salida</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ipc of ingresos1; track ipc.id_ingresoPersonal){
+        <tr>
+          <td>{{ipc.numeroRegistro}}</td>
+          <td>{{ipc.personal.nombre_personal}}{{ipc.personal.apellido_personal}}</td>
+          <td>{{ipc.fecha}}</td>
+          <td>{{ipc.hora_ingreso}}</td>
+          <td>{{ipc.hora_salida}}</td>
+          <td>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#personalModal1"
+                    (click)="editar(ipc)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-danger" (click)="eliminar(ipc)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+
+

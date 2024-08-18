@@ -1,0 +1,194 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Agrega un color de fondo a la página */
+        }
+
+        .container {
+            margin-top: 50px; /* Ajusta el margen superior para centrar la tabla */
+        }
+    </style>
+
+<div class="container mt-4">
+  <div class="modal fade" id="personalModal" tabindex="-1" aria-labelledby="personalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="personalModalLabel">{{insUpd ? 'Nueva Persona' : 'Editar Persona'}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #PersonalForm="ngForm" (ngSubmit)="agregarPE(); PersonalForm.reset()">
+            <div class="form-group">
+              <input [(ngModel)]="persona.id_personaE" name="id_personaE" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Nombre Persona</label>
+              <input [(ngModel)]="persona.nombre_personaE" name="nombre_personaE" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Apellido Persona</label>
+              <input [(ngModel)]="persona.apellido_personaE" name="apellido_personaE" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>DNI</label>
+              <input [(ngModel)]="persona.dni" name="dni" type="text" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">{{textoBoton}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="modal fade" id="personalModal1" tabindex="-1" aria-labelledby="personalModalLabel1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="personalModalLabel1">{{insUpd ? 'Nuevo Ingreso' : 'Editar Ingreso'}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form #PersonalForm1="ngForm" (ngSubmit)="agregarIPE(); PersonalForm1.reset()">
+              <div class="form-group">
+                <input [(ngModel)]="ingreso.id_ingresoPersonaE" name="id_ingresoPersonaE" type="hidden" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Datos de la Persona</label>
+                <ng-select  [(ngModel)]="ingreso.personaE" name="idPersonaE"  >
+                  @for (p of personas; track p.id_personaE){
+                    <ng-option [value]="p">{{p.nombre_personaE}} {{p.apellido_personaE}}
+                      {{p.dni}}
+                    </ng-option>
+                    }
+                  </ng-select>
+              </div>
+              <div class="form-group">
+                <label>Fecha</label>
+                <input [(ngModel)]="ingreso.fecha" name="fecha" type="date" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Hora de Ingreso</label>
+                <input [(ngModel)]="ingreso.hora_ingreso" name="hora_ingreso" type="time" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Hora de Salida</label>
+                <input [(ngModel)]="ingreso.hora_salida" name="hora_salida" type="time" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label>Asunto</label>
+                <input [(ngModel)]="ingreso.asunto" name="asunto" type="text" class="form-control" />
+              </div>
+              <button type="submit" class="btn btn-success">{{textoBoton}}</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="text-center mb-4">Lista de Personas</h2>
+
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+          <h2 class="ml-lg-1">Módulo de Personas</h2>
+        </div>
+        <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-end">
+          <a (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#personalModal" type="button"
+          name="btn_nuevo" id="btn_nuevo" class="btn btn-primary" >
+          <i class="bi bi-person-fill-add"></i>
+            <span> Nueva Persona</span>
+          </a>
+          <a (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#personalModal1" type="button"
+          name="btn_nuevo" id="btn_nuevo" class="btn btn-success" >
+          <i class="bi bi-person-fill-add"></i>
+            <span>Agregar Nueva Entrada</span>
+          </a>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div clas="buscar" style="display: flex">
+			<div class="container1">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorId()">
+							<div class="form-group">
+								<label for="idPersonaE">Buscar por nombre</label>
+								<ng-select  [(ngModel)]="idPersonaE" name="idPersonaE"  >
+                  @for (p of personas; track p.id_personaE){
+                    <ng-option [value]="p.id_personaE">{{p.nombre_personaE}} {{p.apellido_personaE}}
+                      {{p.dni}}
+                    </ng-option>
+                    }
+                  </ng-select>
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="container2">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorFecha()">
+							<div class="form-group">
+								<label for="fechaBusqueda">Ingrese la fecha</label>
+								<input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
+									required />
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+    <table class="table table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Numero</th>
+          <th>Datos de la Persona</th>
+          <th>Fecha</th>
+          <th>Hora de Ingreso</th>
+          <th>Hora de Salida</th>
+          <th>Asunto</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (ipe of ingresos1; track ipe.id_ingresoPersonaE){
+        <tr>
+          <td>{{ipe.numeroRegistro}}</td>
+          <td>{{ipe.personaE.nombre_personaE}} {{ipe.personaE.apellido_personaE}} {{ipe.personaE.dni}}
+          </td>
+          <td>{{ipe.fecha}}</td>
+          <td>{{ipe.hora_ingreso}}</td>
+          <td>{{ipe.hora_salida}}</td>
+          <td>{{ipe.asunto}}</td>
+          <td>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#personalModal1"
+                    (click)="editar(ipe)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-danger" (click)="eliminar(ipe)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      }
+      </tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+

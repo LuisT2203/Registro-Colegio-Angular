@@ -49,16 +49,25 @@ export class IngresoPersonalComponent implements OnInit {
 
 
   cargarIngresos(): void {
+    if (!this.fechaBusqueda && !this.idPersonal) {
+        // Obtener la fecha actual local en formato 'YYYY-MM-DD'
+        const fechaLocal = new Date();
+        const year = fechaLocal.getFullYear();
+        const month = String(fechaLocal.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript van de 0 a 11
+        const day = String(fechaLocal.getDate()).padStart(2, '0');
+        this.fechaBusqueda = `${year}-${month}-${day}`;
+    }
+
     this.service.listarIngresoPC(this.fechaBusqueda, this.idPersonal || undefined)
-      .subscribe(
-        (data: any) => {
-          this.ingresos1 = data;
-        },
-        (error: Error) => {
-          console.error('Error al cargar los ingresos:', error);
-        }
-      );
-  }
+        .subscribe(
+            (data: any) => {
+                this.ingresos1 = data;
+            },
+            (error: Error) => {
+                console.error('Error al cargar los ingresos:', error);
+            }
+        );
+}
   buscarPorFecha(): void {
     this.idPersonal = null;
     this.cargarIngresos();

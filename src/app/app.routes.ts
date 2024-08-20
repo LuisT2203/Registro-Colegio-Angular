@@ -9,11 +9,13 @@ import { IngresoPersonaexternaComponent } from './comp/ingreso-personaexterna/in
 import { LoginComponent } from './comp/login/login.component';
 import { RegistroComponent } from './comp/registro/registro.component';
 import { authGuard } from './auth.guard';
+import { authenticatedGuard } from './authenticated.guard';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegistroComponent },
+  { path: 'login', component: LoginComponent,canActivate: [authenticatedGuard] },
+  { path: 'registro', component: RegistroComponent, canActivate: [authGuard] },
   { path: 'PersonalColegio', component: PersonalcolegioComponent, canActivate: [authGuard] },
   { path: 'PPFF', component: PpffComponent, canActivate: [authGuard] },
   { path: 'PersonaExterna', component: PersonaexternaComponent, canActivate: [authGuard] },

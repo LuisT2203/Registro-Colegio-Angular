@@ -1,4 +1,4 @@
-<ng-container *ngIf="authService.getIsLoggedIn(); else loginTemplate">
+<ng-container *ngIf="authService.isAuthenticated(); else loginTemplate">
   <div class="main-container m-8">
     <app-navegador></app-navegador>
     <div class="content-area">

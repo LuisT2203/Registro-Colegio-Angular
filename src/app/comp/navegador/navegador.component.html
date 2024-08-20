@@ -63,26 +63,26 @@
     </li>
 
     <li>
-      <a href="#">
+      <a [routerLink]="['/registro']">
         <i class='bx bx-cog' ></i>
-        <span class="link_name">Setting</span>
+        <span class="link_name">Registrar Usuario</span>
       </a>
       <ul class="sub-menu blank">
-        <li><a class="link_name" href="#">Setting</a></li>
+        <li><a class="link_name" href="#"></a></li>
       </ul>
     </li>
     <li>
   <div sec:authorize="isAuthenticated()" class="profile-details">
     <div class="profile-content">
-      <img src="image/profile.jpg" alt="profileImg">
+      <img src="/assets/static/images/p.png" alt="profileImg">
     </div>
     <div class="name-job">
       <div sec:authentication="name" class="profile_name"></div>
 
     </div>
-    <i (click)="logout()" class='bx bx-log-out'></i>
+
     <form   method="POST" id="logoutForm">
-      <i onclick="document.getElementById('logoutForm').submit();"class='bx bx-log-out' ></i>
+      <i (click)="logout()" class='bx bx-log-out'></i>
     </form>
 
   </div>

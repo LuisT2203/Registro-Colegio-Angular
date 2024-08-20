@@ -47,6 +47,14 @@ export class IngresoPpffComponent implements OnInit {
 
 
   cargarIngresos(): void {
+    if (!this.fechaBusqueda && !this.idPadre) {
+      // Obtener la fecha actual local en formato 'YYYY-MM-DD'
+      const fechaLocal = new Date();
+      const year = fechaLocal.getFullYear();
+      const month = String(fechaLocal.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript van de 0 a 11
+      const day = String(fechaLocal.getDate()).padStart(2, '0');
+      this.fechaBusqueda = `${year}-${month}-${day}`;
+  }
     this.service.listarIngresoPF(this.fechaBusqueda, this.idPadre || undefined)
       .subscribe(
         (data: any) => {

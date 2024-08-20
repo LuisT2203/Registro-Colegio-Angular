@@ -52,6 +52,14 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
 
 
   cargarIngresos(): void {
+    if (!this.fechaBusqueda && !this.idPersonaE) {
+      // Obtener la fecha actual local en formato 'YYYY-MM-DD'
+      const fechaLocal = new Date();
+      const year = fechaLocal.getFullYear();
+      const month = String(fechaLocal.getMonth() + 1).padStart(2, '0'); // Los meses en JavaScript van de 0 a 11
+      const day = String(fechaLocal.getDate()).padStart(2, '0');
+      this.fechaBusqueda = `${year}-${month}-${day}`;
+  }
     this.service.listarIngresoPE(this.fechaBusqueda, this.idPersonaE || undefined)
       .subscribe(
         (data: any) => {

@@ -11,7 +11,7 @@ export class AuthService {
   private LOGIN_URL = 'https://registro-colegio.onrender.com/api/usuario/login';
   private tokenKey = 'authToken';
 
-  private isLoggedIn = false;
+
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -34,7 +34,7 @@ export class AuthService {
     }
   }
 
-  private getToken(): string | null {
+   getToken(): string | null {
     if (this.isBrowser()) {
       return localStorage.getItem(this.tokenKey);
     }

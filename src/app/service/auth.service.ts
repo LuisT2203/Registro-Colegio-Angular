@@ -8,7 +8,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
 
-  private LOGIN_URL = 'https://registro-colegio.onrender.com/login';
+  private LOGIN_URL = 'https://registro-colegio.onrender.com/api/usuario/login';
   private tokenKey = 'authToken';
 
   private isLoggedIn = false;

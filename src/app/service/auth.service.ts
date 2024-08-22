@@ -10,6 +10,8 @@ export class AuthService {
 
   private LOGIN_URL = 'https://registro-colegio.onrender.com/api/usuario/login';
   private tokenKey = 'authToken';
+  private REFRESH_URL = 'https://registro-colegio.onrender.com/api/usuario/refresh';
+  private refreshtokenKey = 'refreshToken';
 
 
 
@@ -21,6 +23,8 @@ export class AuthService {
         if(response.token){
           console.log(response.token)
           this.setToken(response.token)
+          this.setRefreshToken(response.refreshToken)
+          this.autoRefreshToken()
         }
       })
     );
@@ -41,6 +45,48 @@ export class AuthService {
     return null;
   }
 
+  private setRefreshToken(token: string): void {
+    if (this.isBrowser()) {
+      localStorage.setItem(this.refreshtokenKey, token);
+    }
+  }
+
+   getRefreshToken(): string | null {
+    if (this.isBrowser()) {
+      return localStorage.getItem(this.refreshtokenKey);
+    }
+    return null;
+  }
+
+  refreshToken(): Observable<any> {
+    const refreshToken = this.getRefreshToken()
+    return this.http.post<any>(this.REFRESH_URL, { refreshToken }).pipe(
+      tap(response =>{
+        if(response.token){
+          console.log(response.token)
+          this.setToken(response.token)
+          this.setRefreshToken(response.refreshToken)
+          this.autoRefreshToken()
+        }
+      })
+    );
+  }
+
+  autoRefreshToken() : void {
+    const token = this.getToken();
+    if(!token){
+      return ;
+    }
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const exp = payload.exp * 1000;
+
+    const timeout = exp - Date.now()-(60 * 1000);
+    setTimeout(() => {
+      this.refreshToken().subscribe()
+    }, timeout);
+  }
+
   isAuthenticated(): boolean{
     const token = this.getToken();
     if(!token){
@@ -53,6 +99,7 @@ export class AuthService {
   }
   logout(): void{
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.refreshtokenKey);
     this.router.navigate(['/login'])
   }
 

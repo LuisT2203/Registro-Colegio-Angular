@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavegadorComponent } from './comp/navegador/navegador.component';
 import { provideToastr, ToastrModule } from 'ngx-toastr';
@@ -17,7 +17,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  constructor(public authService: AuthService) {}
+export class AppComponent implements OnInit {
   title = 'Registro Colegio';
+  constructor(public authService: AuthService) {}
+
+
+
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()){
+      this.authService.autoRefreshToken()
+    }
+  }
 }

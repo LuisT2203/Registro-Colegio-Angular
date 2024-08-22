@@ -21,7 +21,18 @@ export class LoginComponent {
 
   login(): void{
     this.authService.login(this.correo, this.clave).subscribe({
-      next: ()=> this.router.navigate(['/inicio']),
+      next: (response)=> {
+        const token = response.token;
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const role = payload.role;
+
+        if(role === 'admin'){
+          this.router.navigate(['/inicio'])
+        }else{
+          this.router.navigate(['/IngresoPersonalColegio'])
+        }
+
+      },
       error: (err) => console.error('Login Fallido', err)
     })
   }

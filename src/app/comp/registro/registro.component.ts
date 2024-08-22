@@ -18,7 +18,7 @@ export class RegistroComponent {
   isResultLoaded=false;
   isUpdateFormActive=false;
 
-  correo: string ="";
+  usuario: string ="";
   tipo : string ="";
   clave: string ="";
 
@@ -27,7 +27,7 @@ export class RegistroComponent {
  save(){
 
   let bodyData={
-    "correo" : this.correo,
+    "usuario" : this.usuario,
     "tipo" : this.tipo,
     "clave" :this.clave
   };

@@ -14,13 +14,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  correo: string ="";
+  usuario: string ="";
   clave: string ="";
 
   constructor(private http: HttpClient,private router: Router,private authService: AuthService) {}
 
   login(): void{
-    this.authService.login(this.correo, this.clave).subscribe({
+    this.authService.login(this.usuario, this.clave).subscribe({
       next: (response)=> {
         const token = response.token;
         const payload = JSON.parse(atob(token.split('.')[1]));

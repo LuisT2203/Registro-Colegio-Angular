@@ -32,6 +32,7 @@ body{
   width: 100%;
   display: flex;
   align-items: center;
+  user-select: none;
 }
 .sidebar .logo-details img{
 
@@ -77,6 +78,8 @@ body{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  user-select: none;
+
 }
 .sidebar.close .nav-links li .iocn-link{
   display: block

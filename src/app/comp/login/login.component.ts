@@ -24,9 +24,9 @@ export class LoginComponent {
       next: (response)=> {
         const token = response.token;
         const payload = JSON.parse(atob(token.split('.')[1]));
-        const role = payload.role;
+        const tipo = payload.tipo;
 
-        if(role === 'admin'){
+        if(tipo === 'admin'){
           this.router.navigate(['/inicio'])
         }else{
           this.router.navigate(['/IngresoPersonalColegio'])

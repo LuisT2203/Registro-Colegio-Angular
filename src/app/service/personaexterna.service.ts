@@ -7,7 +7,9 @@ import { Ipersonaexterna } from '../model/iPersonaExterna';
 })
 export class PersonaexternaService {
 
-  private baseURL = "https://registro-colegio.onrender.com/ControladorPE";
+ // private baseURL = "https://registro-colegio.onrender.com/ControladorPE";
+
+  private baseURL = "http://localhost:8080/ControladorPE";
 
   constructor(private http: HttpClient) { }
 

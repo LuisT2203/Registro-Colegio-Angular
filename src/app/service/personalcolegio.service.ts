@@ -7,7 +7,9 @@ import { map } from 'rxjs';
   providedIn: 'root'
 })
 export class PersonalcolegioService {
-  private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
+ // private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
+
+  private baseURL = "http://localhost:8080/ControladorPC";
 
   constructor(private http: HttpClient) { }
 

@@ -85,7 +85,15 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
     this.service.getIPE(ipe.id_ingresoPersonaE).subscribe(
       (data: any) => {
         this.ingreso = data;
-        // Abre el modal programáticamente
+
+        const personalSeleccionado = this.personas
+        .find(p => p.id_personaE === this.ingreso.personaE?.id_personaE);
+
+
+        // Reasignar el valor correcto
+        setTimeout(() => {
+          this.ingreso.personaE = personalSeleccionado!;
+        }, 0);
       }
     );
   }
@@ -143,6 +151,7 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
         (resp) => {
           this.resetForm();
           this.toastr.success('Padre agregado con éxito', 'Éxito');
+          this.getPersonas();
         },
         (error) => {
           console.error('Error al agregar Padre:', error);

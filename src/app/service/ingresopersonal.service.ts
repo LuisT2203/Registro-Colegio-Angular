@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class IngresopersonalService {
 
-  private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
+  // private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
+
+  private baseURL = "http://localhost:8080/ControladorPC";
 
   constructor(private http: HttpClient) { }
 

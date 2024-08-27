@@ -15,12 +15,12 @@
   display: grid;
   place-items: center;
   min-height: 100vh;
-  background: linear-gradient(90deg, #000080, #f0effd,#000080);
+  background: linear-gradient(90deg, #0000FF, #FFFFFF, #FF0000); /* Degradado horizontal con los colores de la bandera de Francia */
   max-width: 100%;
 }
 
 .screen {
-	background: linear-gradient(90deg, #041fe9, #3d52f8);
+	background: linear-gradient(180deg, #FF0000, #FFFFFF, #0000FF);
 	position: relative;
 	height: 600px;
 	width: 360px;
@@ -56,7 +56,7 @@
 .screen__background__shape1 {
 	height: 520px;
 	width: 520px;
-	background: #FFF;
+	background: #FFFFFF; /* Blanco, representando el centro de la bandera */
 	top: -50px;
 	right: 120px;
 	border-radius: 0 72px 0 0;
@@ -65,7 +65,7 @@
 .screen__background__shape2 {
 	height: 220px;
 	width: 220px;
-	background: #0e0aff;
+	background: linear-gradient(45deg, #FF0000, #FFFFFF, #0000FF); /* Degradado diagonal de rojo a blanco y azul */
 	top: -172px;
 	right: 0;
 	border-radius: 32px;
@@ -74,7 +74,7 @@
 .screen__background__shape3 {
 	height: 540px;
 	width: 190px;
-	background: linear-gradient(270deg, #0e12fa, #3d39ff);
+	background: linear-gradient(90deg, #0000FF, #FFFFFF, #FF0000); /* Degradado horizontal de azul a blanco y rojo */
 	top: -24px;
 	right: 0;
 	border-radius: 32px;
@@ -83,7 +83,7 @@
 .screen__background__shape4 {
 	height: 400px;
 	width: 200px;
-	background: #4157ff;
+	background: linear-gradient(180deg, #FF0000, #FFFFFF, #0000FF); /* Degradado vertical de rojo a blanco y azul */
 	top: 420px;
 	right: 50px;
 	border-radius: 60px;
@@ -92,7 +92,7 @@
 .login {
 	width: 320px;
 	padding: 30px;
-	padding-top: 156px;
+	padding-top: 50px;
 }
 
 .login__field {
@@ -181,3 +181,17 @@
 .social-login__icon:hover {
 	transform: scale(1.5);
 }
+
+.logo-details {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el logo y el nombre */
+  margin-bottom: 10px; /* Espacio entre el logo y el campo de usuario */
+}
+
+.logo-details img {
+  width: 110px; /* Ajusta este valor para hacer el logo más pequeño o grande según necesites */
+  height: auto;
+  margin-right: 10px; /* Espacio entre el logo y el nombre */
+}
+
+

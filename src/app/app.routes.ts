@@ -10,6 +10,7 @@ import { LoginComponent } from './comp/login/login.component';
 import { RegistroComponent } from './comp/registro/registro.component';
 import { authGuard } from './auth.guard';
 import { authenticatedGuard } from './authenticated.guard';
+import { EncargoComponent } from './comp/encargo/encargo.component';
 
 
 export const routes: Routes = [
@@ -23,5 +24,6 @@ export const routes: Routes = [
   { path: 'IngresoPPFF', component: IngresoPpffComponent, canActivate: [authGuard] },
   { path: 'IngresoPE', component: IngresoPersonaexternaComponent, canActivate: [authGuard] },
   { path: 'inicio', component: InicioComponent, canActivate: [authGuard] },
+  { path: 'Encargo', component: EncargoComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '/login' }  // Redirige a login para rutas no encontradas
 ];

@@ -80,7 +80,16 @@ export class IngresoPpffComponent implements OnInit {
     this.service.getIPF(ipf.id_ingresoPPFF).subscribe(
       (data: any) => {
         this.ingreso = data;
-        // Abre el modal programáticamente
+
+        const personalSeleccionado = this.padres
+        .find(p => p.id_ppff === this.ingreso.padre?.id_ppff);
+
+
+        // Reasignar el valor correcto
+        setTimeout(() => {
+          this.ingreso.padre = personalSeleccionado!;
+        }, 0);
+
       }
     );
   }
@@ -138,6 +147,7 @@ export class IngresoPpffComponent implements OnInit {
         (resp) => {
           this.resetForm();
           this.toastr.success('Padre agregado con éxito', 'Éxito');
+          this.getPadres();
         },
         (error) => {
           console.error('Error al agregar Padre:', error);

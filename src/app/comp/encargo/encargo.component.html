@@ -1,0 +1,123 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Agrega un color de fondo a la página */
+        }
+
+        .container {
+            margin-top: 50px; /* Ajusta el margen superior para centrar la tabla */
+        }
+    </style>
+
+<div class="container mt-4">
+  <div class="modal fade" id="personalModal" tabindex="-1" aria-labelledby="personalModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="personalModalLabel">{{insUpd ? 'Nueva Persona' : 'Editar Persona'}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #PersonalForm="ngForm" (ngSubmit)="agregarEnc(); PersonalForm.reset()">
+            <div class="form-group">
+              <input [(ngModel)]="encargo.id_enc" name="id_enc" type="hidden" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Fecha</label>
+              <input [(ngModel)]="encargo.fecha_enc" name="fecha_enc" type="date" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Encargo</label>
+              <input [(ngModel)]="encargo.encargoNom" name="encargoNom" type="text" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-success">{{textoBoton}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="text-center mb-4">Lista de Encargos</h2>
+  <div clas="buscar" style="display: flex">
+    <div class="container1">
+      <div class="row justify-content-start">
+        <div class="col-md-6-start">
+          <form (ngSubmit)="buscarPorNombreE()">
+            <div class="form-group">
+              <label for="idPersonaE">Buscar por nombre</label>
+              <input type="text" class="form-control" [(ngModel)]="encargoNom" id="encargoNom" name="encargoNom"
+                required />
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container2">
+      <div class="row justify-content-start">
+        <div class="col-md-6-start">
+          <form (ngSubmit)="buscarPorFecha()">
+            <div class="form-group">
+              <label for="fechaBusqueda">Ingrese la fecha</label>
+              <input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
+                required />
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-title">
+    <div class="row">
+      <div class="col-sm-6 p-0 flex justify-content-lg-start justify-content-center">
+        <h2 class="ml-lg-1">Módulo de Encargos</h2>
+      </div>
+      <div class="col-sm-6 p-0 flex justify-content-lg-end justify-content-end">
+        <a (click)="resetForm()" data-bs-toggle="modal" data-bs-target="#personalModal" type="button"
+        name="btn_nuevo" id="btn_nuevo" class="btn btn-success" >
+        <i class="bi bi-person-fill-add"></i>
+          <span>Agregar Nuevo Encargo</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Numero</th>
+        <th>Fecha</th>
+        <th>Encargo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (e of encargos1; track e.id_enc){
+      <tr>
+        <td>{{e.numeroRegistro}}</td>
+        <td>{{e.fecha_enc}}</td>
+        <td>{{e.encargoNom}}</td>
+        <td>
+          <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#personalModal"
+                  (click)="editar(e)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn btn-danger" (click)="eliminar(e)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    }
+    </tbody>
+  </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+crossorigin="anonymous"></script>

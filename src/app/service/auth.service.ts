@@ -8,9 +8,15 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
 
-  private LOGIN_URL = 'https://registro-colegio.onrender.com/api/usuario/login';
+  // private LOGIN_URL = 'https://registro-colegio.onrender.com/api/usuario/login';
+  // private tokenKey = 'authToken';
+  // private REFRESH_URL = 'https://registro-colegio.onrender.com/api/usuario/refresh';
+  // private refreshtokenKey = 'refreshToken';
+
+
+  private LOGIN_URL = 'http://localhost:8080/api/usuario/login';
   private tokenKey = 'authToken';
-  private REFRESH_URL = 'https://registro-colegio.onrender.com/api/usuario/refresh';
+  private REFRESH_URL = 'http://localhost:8080/api/usuario/refresh';
   private refreshtokenKey = 'refreshToken';
 
 

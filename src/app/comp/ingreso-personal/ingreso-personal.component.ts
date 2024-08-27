@@ -83,7 +83,19 @@ export class IngresoPersonalComponent implements OnInit {
     this.service.getIPC(ipc.id_ingresoPersonal).subscribe(
       (data: any) => {
         this.ingreso = data;
-        // Abre el modal programáticamente
+         // Encuentra la persona correspondiente en la lista de personales
+         //No cargaba el select al presionar editar
+         // Busca en la lista de personales (`this.personales`) el objeto que tenga un `id_personal` igual al `id_personal` del objeto asociado al ingreso (`this.ingreso.personal`).
+        // Este proceso es realizado mediante el método `find` que devuelve el primer objeto que cumple con la condición especificada.
+
+        const personalSeleccionado = this.personales
+        .find(p => p.id_personal === this.ingreso.personal?.id_personal);
+
+
+        // Reasignar el valor correcto
+        setTimeout(() => {
+          this.ingreso.personal = personalSeleccionado!;
+        }, 0);
       }
     );
   }
@@ -141,6 +153,7 @@ export class IngresoPersonalComponent implements OnInit {
         (resp) => {
           this.resetForm();
           this.toastr.success('Personal agregado con éxito', 'Éxito');
+          this.getPersonales();
         },
         (error) => {
           console.error('Error al agregar personal:', error);

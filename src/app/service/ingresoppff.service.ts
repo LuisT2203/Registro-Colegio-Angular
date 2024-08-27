@@ -8,7 +8,9 @@ import { Iingresoppff } from '../model/iIngresoPPFF';
 })
 export class IngresoppffService {
 
-  private baseURL = "https://registro-colegio.onrender.com/ControladorPPFF";
+ // private baseURL = "https://registro-colegio.onrender.com/ControladorPPFF";
+
+  private baseURL = "http://localhost:8080/ControladorPPFF";
 
   constructor(private http: HttpClient) { }
 

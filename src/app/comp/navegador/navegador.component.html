@@ -17,7 +17,7 @@
     </li>
     <li>
       <div class="iocn-link">
-        <a th:href="@{/listarIngresoPC}" >
+        <a [routerLink]="['/IngresoPersonalColegio']" >
           <i class='bx bx-collection'  ></i>
           <span class="link_name">Personal Colegio</span>
         </a>
@@ -32,7 +32,7 @@
     </li>
     <li>
       <div class="iocn-link">
-        <a th:href="@{/listarIPPFF}" >
+        <a [routerLink]="['/IngresoPPFF']" >
           <i class='bx bx-book-alt' ></i>
           <span class="link_name">Padres de Familia</span>
         </a>
@@ -42,13 +42,13 @@
 
         <li><a [routerLink]="['/PPFF']">Listado de Padres</a></li>
         <li><a [routerLink]="['/IngresoPPFF']" >Ingreso Padres</a></li>
-        <li><a th:href="@{/usuario/registro}">Registrarse</a> |</li>
+
       </ul>
     </li>
 
     <li>
       <div class="iocn-link">
-        <a th:href="@{/listarIngresoPE}" >
+        <a [routerLink]="['/IngresoPE']" >
           <i class='bx bx-plug' ></i>
           <span class="link_name">Persona Externa</span>
         </a>
@@ -61,6 +61,16 @@
 
       </ul>
     </li>
+    <li>
+      <a [routerLink]="['/Encargo']">
+        <i class='bx bx-message-detail' ></i>
+        <span class="link_name">Encargos</span>
+      </a>
+      <ul class="sub-menu blank">
+        <li><a class="link_name" href="#"></a></li>
+      </ul>
+    </li>
+    <li>
 
     <li>
       <a [routerLink]="['/registro']">

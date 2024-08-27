@@ -31,8 +31,8 @@ export class RegistroComponent {
     "tipo" : this.tipo,
     "clave" :this.clave
   };
- // this.http.post("https://registro-colegio.onrender.com/api/usuario/save",bodyData,{responseType:'text'}).subscribe((resultData:any)=>
-    this.http.post("http://localhost:8080/api/usuario/save",bodyData,{responseType:'text'}).subscribe((resultData:any)=>
+  this.http.post("https://registro-colegio.onrender.com/api/usuario/save",bodyData,{responseType:'text'}).subscribe((resultData:any)=>
+//this.http.post("http://localhost:8080/api/usuario/save",bodyData,{responseType:'text'}).subscribe((resultData:any)=>
     {
       console.log(resultData);
       alert("Usuario Registrado con Exito");

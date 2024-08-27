@@ -6,9 +6,9 @@ import { Ippff } from '../model/iPPFF';
   providedIn: 'root'
 })
 export class PpffService {
- // private baseURL = "https://registro-colegio.onrender.com/ControladorPPFF";
+  private baseURL = "https://registro-colegio.onrender.com/ControladorPPFF";
 
-  private baseURL = "http://localhost:8080/ControladorPPFF";
+  //private baseURL = "http://localhost:8080/ControladorPPFF";
 
   constructor(private http: HttpClient) { }
   getPPFFS() {

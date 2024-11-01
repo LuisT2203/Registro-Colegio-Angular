@@ -13,9 +13,12 @@
         <i class='bx bx-grid-alt' ></i>
         <span class="link_name">Inicio</span>
       </a>
+      <ul class="sub-menu">
+        <li><a class="link_name" >Inicio</a></li>
+      </ul>
 
     </li>
-    <li>
+    <li *ngIf="authService.isAuthenticated()&& !(authService.getUserType() === 'user')">
       <div class="iocn-link">
         <a [routerLink]="['/IngresoPersonalColegio']" >
           <i class='bx bx-collection'  ></i>
@@ -24,13 +27,13 @@
         <i class='bx bxs-chevron-down arrow' (click)="toggleSubMenu($event)" ></i>
       </div>
       <ul class="sub-menu">
-
+        <li><a class="link_name" >Personal</a></li>
         <li><a [routerLink]="['/PersonalColegio']">Listar Personal Colegio</a></li>
         <li><a [routerLink]="['/IngresoPersonalColegio']" >Ingreso Personal</a></li>
 
       </ul>
     </li>
-    <li>
+    <li *ngIf="authService.isAuthenticated()&& !(authService.getUserType() === 'user')">
       <div class="iocn-link">
         <a [routerLink]="['/IngresoPPFF']" >
           <i class='bx bx-book-alt' ></i>
@@ -39,14 +42,14 @@
         <i class='bx bxs-chevron-down arrow' (click)="toggleSubMenu($event)" ></i>
       </div>
       <ul class="sub-menu">
-
+        <li><a class="link_name" >Padres</a></li>
         <li><a [routerLink]="['/PPFF']">Listado de Padres</a></li>
         <li><a [routerLink]="['/IngresoPPFF']" >Ingreso Padres</a></li>
 
       </ul>
     </li>
 
-    <li>
+    <li *ngIf="authService.isAuthenticated()&& !(authService.getUserType() === 'user')">
       <div class="iocn-link">
         <a [routerLink]="['/IngresoPE']" >
           <i class='bx bx-plug' ></i>
@@ -55,7 +58,7 @@
         <i class='bx bxs-chevron-down arrow'(click)="toggleSubMenu($event)" ></i>
       </div>
       <ul class="sub-menu">
-        <li><a class="link_name" th:href="@{/listarIngresoPE}" >Persona Externa</a></li>
+        <li><a class="link_name"  >Persona Externa</a></li>
         <li><a [routerLink]="['/PersonaExterna']">Listado de Personas</a></li>
         <li><a [routerLink]="['/IngresoPE']" >Ingreso Persona Externa</a></li>
 
@@ -67,18 +70,18 @@
         <span class="link_name">Encargos</span>
       </a>
       <ul class="sub-menu blank">
-        <li><a class="link_name" href="#"></a></li>
+        <li><a class="link_name">Encargos</a></li>
       </ul>
     </li>
     <li>
 
-    <li>
+    <li *ngIf="authService.isAuthenticated()&& !(authService.getUserType() === 'user')">
       <a [routerLink]="['/registro']">
         <i class='bx bx-cog' ></i>
         <span class="link_name">Registrar Usuario</span>
       </a>
-      <ul class="sub-menu blank">
-        <li><a class="link_name" href="#"></a></li>
+      <ul class="sub-menu">
+        <li><a class="link_name" >Registrar Usuario</a></li>
       </ul>
     </li>
     <li>

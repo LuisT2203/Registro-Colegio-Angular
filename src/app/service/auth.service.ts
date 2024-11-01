@@ -27,6 +27,13 @@ export class AuthService {
     return this.http.post<any>(this.LOGIN_URL, { usuario, clave }).pipe(
       tap(response =>{
         if(response.token){
+          const token = response.token;
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const tipo = payload.tipo;
+          const usuarioCorreo = payload.sub;
+
+          this.setUserEmail(usuarioCorreo);
+          this.setUserType(tipo);
           console.log(response.token)
           this.setToken(response.token)
           this.setRefreshToken(response.refreshToken)
@@ -34,6 +41,24 @@ export class AuthService {
         }
       })
     );
+  }
+  setUserEmail(correo: string) {
+    localStorage.setItem('userEmail', correo); // O donde desees guardar el correo
+  }
+  getUserEmail(): string | null {
+    return localStorage.getItem('userEmail'); // O donde hayas guardado el correo
+  }
+  private setUserType(tipo: string): void {
+    if (this.isBrowser()) {
+      localStorage.setItem('userType', tipo);
+    }
+  }
+
+  getUserType(): string | null {
+    if (this.isBrowser()) {
+      return localStorage.getItem('userType');
+    }
+    return null;
   }
   private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
@@ -106,6 +131,8 @@ export class AuthService {
   logout(): void{
     localStorage.removeItem(this.tokenKey);
     localStorage.removeItem(this.refreshtokenKey);
+    localStorage.removeItem('userType');
+    localStorage.removeItem('userEmail');
     this.router.navigate(['/login'])
   }
 

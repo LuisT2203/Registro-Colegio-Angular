@@ -12,7 +12,7 @@ import { AuthService } from '../../service/auth.service';
 })
 export class NavegadorComponent {
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   isSidebarClosed = false;
   toggleSidebar() {

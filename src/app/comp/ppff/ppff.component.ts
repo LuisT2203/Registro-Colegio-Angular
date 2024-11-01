@@ -5,6 +5,7 @@ import { Ippff } from '../../model/iPPFF';
 import { Ppff } from '../../model/ppff';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 @Component({
   selector: 'app-ppff',
@@ -30,7 +31,13 @@ export class PpffComponent implements OnInit {
 
   getPpffs(){
     this.service.getPPFFS().subscribe(
-      (data:any)=>this.ppffs=data
+      (data:any)=>{
+        this.ppffs=data.object
+      },
+      error => {
+        console.error('Error al obtener los padres', error);
+        this.toastr.error(error.error, 'Error');
+      }
     );
   }
   editar(pf: Ippff) {
@@ -47,26 +54,26 @@ export class PpffComponent implements OnInit {
   agregar() {
     if (this.insUpd) {
       this.service.insertarPPFF(this.ppff).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPpffs();
           this.resetForm();
-          this.toastr.success('ppff agregado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al agregar ppff:', error);
-          this.toastr.error('No se pudo agregar el ppff. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     } else {
       this.service.actualizarPPFF(this.ppff).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPpffs();
           this.resetForm();
-          this.toastr.success('ppff actualizado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al actualizar ppff:', error);
-          this.toastr.error('No se pudo actualizar el ppff. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al actualizar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     }
@@ -83,9 +90,13 @@ export class PpffComponent implements OnInit {
   eliminar(pf: Ippff) {
     if (confirm("¿Estás seguro de eliminar este padre de familia?")) {
         this.service.eliminarPPFF(pf.id_ppff).subscribe(
-            () => {
+            (resp :MensajeResponse) => {
+                this.toastr.info(resp.mensaje, 'Eliminado');
                 this.getPpffs(); // Actualizar la lista después de eliminar
-                this.toastr.info('ppff Eliminado con éxito', 'Eliminado');
+            },
+            (error) => {
+              console.error('Error al Eliminar:', error);
+              this.toastr.error(error.error, 'Error');
             }
         );
     }

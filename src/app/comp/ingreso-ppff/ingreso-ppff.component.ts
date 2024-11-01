@@ -9,6 +9,7 @@ import { Iingresoppff } from '../../model/iIngresoPPFF';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 @Component({
   selector: 'app-ingreso-ppff',
@@ -58,10 +59,11 @@ export class IngresoPpffComponent implements OnInit {
     this.service.listarIngresoPF(this.fechaBusqueda, this.idPadre || undefined)
       .subscribe(
         (data: any) => {
-          this.ingresos1 = data;
+          this.ingresos1 = data.object;
         },
-        (error: Error) => {
-          console.error('Error al cargar los ingresos:', error);
+        error => {
+          console.error('Error al obtener los padres', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
   }
@@ -97,26 +99,26 @@ export class IngresoPpffComponent implements OnInit {
   agregarIPF() {
     if (this.insUpd) {
       this.service.insertarIPF(this.ingreso).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.cargarIngresos();
           this.resetForm();
-          this.toastr.success('Ingreso agregado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al agregar Ingreso:', error);
-          this.toastr.error('No se pudo agregar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     } else {
       this.service.actualizarIPF(this.ingreso).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.cargarIngresos();
           this.resetForm();
-          this.toastr.success('Ingreso actualizado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al actualizar Ingreso:', error);
-          this.toastr.error('No se pudo actualizar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al actualizar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     }
@@ -134,9 +136,13 @@ export class IngresoPpffComponent implements OnInit {
   eliminar(ipf: Iingresoppff) {
     if (confirm("¿Estás seguro de eliminar este empleado?")) {
         this.service.eliminarIPF(ipf.id_ingresoPPFF).subscribe(
-            () => {
+            (resp :MensajeResponse) => {
               this.cargarIngresos(); // Actualizar la lista después de eliminar
-                this.toastr.info('Ingreso Eliminado con éxito', 'Eliminado');
+              this.toastr.info(resp.mensaje, 'Eliminado');
+            },
+            (error) => {
+              console.error('Error al Eliminar:', error);
+              this.toastr.error(error.error, 'Error');
             }
         );
     }
@@ -144,21 +150,21 @@ export class IngresoPpffComponent implements OnInit {
 
   agregarPF()  {
       this.servicePF.insertarPPFF(this.padre).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
           this.resetForm();
-          this.toastr.success('Padre agregado con éxito', 'Éxito');
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPadres();
         },
         (error) => {
-          console.error('Error al agregar Padre:', error);
-          this.toastr.error('No se pudo agregar el Padre. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
 }
 
 getPadres(){
   this.servicePF.getPPFFS().subscribe(
-    (data:any)=>this.padres=data
+    (data:any)=>this.padres=data.object
   );
 }
 

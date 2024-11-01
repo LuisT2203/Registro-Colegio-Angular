@@ -9,6 +9,7 @@ import { IingresopersonaE } from '../../model/iIngresoPersonaE';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 
 @Component({
@@ -63,10 +64,11 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
     this.service.listarIngresoPE(this.fechaBusqueda, this.idPersonaE || undefined)
       .subscribe(
         (data: any) => {
-          this.ingresos1 = data;
+          this.ingresos1 = data.object;
         },
-        (error: Error) => {
-          console.error('Error al cargar los ingresos:', error);
+        error => {
+          console.error('Error al obtener los padres', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
   }
@@ -101,26 +103,26 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
   agregarIPE() {
     if (this.insUpd) {
       this.service.insertarIPE(this.ingreso).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
           this.cargarIngresos();
           this.resetForm();
-          this.toastr.success('Ingreso agregado con éxito', 'Éxito');
+          this.toastr.success(resp.mensaje, 'Éxito');
         },
         (error) => {
-          console.error('Error al agregar Ingreso:', error);
-          this.toastr.error('No se pudo agregar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     } else {
       this.service.actualizarIPE(this.ingreso).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
           this.cargarIngresos();
           this.resetForm();
-          this.toastr.success('Ingreso actualizado con éxito', 'Éxito');
+          this.toastr.success(resp.mensaje, 'Éxito');
         },
         (error) => {
-          console.error('Error al actualizar Ingreso:', error);
-          this.toastr.error('No se pudo actualizar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al actualizar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     }
@@ -138,9 +140,13 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
   eliminar(ipe: IingresopersonaE) {
     if (confirm("¿Estás seguro de eliminar este empleado?")) {
         this.service.eliminarIPE(ipe.id_ingresoPersonaE).subscribe(
-            () => {
+            (resp :MensajeResponse) => {
               this.cargarIngresos(); // Actualizar la lista después de eliminar
-                this.toastr.info('Ingreso Eliminado con éxito', 'Eliminado');
+              this.toastr.info(resp.mensaje, 'Eliminado');
+            },
+            (error) => {
+              console.error('Error al Eliminar:', error);
+              this.toastr.error(error.error, 'Error');
             }
         );
     }
@@ -148,21 +154,21 @@ constructor(private service:IngresopersonaexternaService, private servicePE: Per
 
   agregarPE()  {
       this.servicePE.insertarPE(this.persona).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
           this.resetForm();
-          this.toastr.success('Padre agregado con éxito', 'Éxito');
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPersonas();
         },
         (error) => {
-          console.error('Error al agregar Padre:', error);
-          this.toastr.error('No se pudo agregar el Padre. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
 }
 
 getPersonas(){
   this.servicePE.getPES().subscribe(
-    (data:any)=>this.personas=data
+    (data:any)=>this.personas=data.object
   );
 }
 }

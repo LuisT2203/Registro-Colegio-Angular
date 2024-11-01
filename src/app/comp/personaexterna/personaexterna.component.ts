@@ -5,6 +5,7 @@ import { Ipersonaexterna } from '../../model/iPersonaExterna';
 import { Personaexterna } from '../../model/personaexterna';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 @Component({
   selector: 'app-personaexterna',
@@ -29,7 +30,13 @@ export class PersonaexternaComponent implements OnInit {
 
   getPersonas(){
     this.service.getPES().subscribe(
-      (data:any)=>this.personas=data
+      (data:any)=>{
+        this.personas=data.object
+      },
+      error => {
+        console.error('Error al obtener los padres', error);
+        this.toastr.error(error.error, 'Error');
+      }
     );
   }
   editar(pe: Ipersonaexterna) {
@@ -46,26 +53,26 @@ export class PersonaexternaComponent implements OnInit {
   agregar() {
     if (this.insUpd) {
       this.service.insertarPE(this.personaE).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPersonas();
           this.resetForm();
-          this.toastr.success('Persona Externa agregada con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al agregar Persona Externa:', error);
-          this.toastr.error('No se pudo agregar la Persona Externa. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     } else {
       this.service.actualizarPE(this.personaE).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPersonas();
           this.resetForm();
-          this.toastr.success('Persona Externa actualizado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al actualizar Persona Externa:', error);
-          this.toastr.error('No se pudo actualizar la Persona Externa. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al actualizar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     }
@@ -82,9 +89,13 @@ export class PersonaexternaComponent implements OnInit {
   eliminar(pe: Ipersonaexterna) {
     if (confirm("¿Estás seguro de eliminar este empleado?")) {
         this.service.eliminarPE(pe.id_personaE).subscribe(
-            () => {
+            (resp :MensajeResponse) => {
+              this.toastr.info(resp.mensaje, 'Eliminado');
                 this.getPersonas(); // Actualizar la lista después de eliminar
-                this.toastr.info('personaE Eliminado con éxito', 'Eliminado');
+            },
+            (error) => {
+              console.error('Error al Eliminar:', error);
+              this.toastr.error(error.error, 'Error');
             }
         );
     }

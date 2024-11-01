@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Ipersonaexterna } from '../model/iPersonaExterna';
+import { MensajeResponse } from '../model/MensajeResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonaexternaService {
 
- private baseURL = "https://registro-colegio.onrender.com/ControladorPE";
+// private baseURL = "https://registro-colegio.onrender.com/ControladorPE";
 
-  // private baseURL = "http://localhost:8080/ControladorPE";
+   private baseURL = "http://localhost:8080/ControladorPE";
 
   constructor(private http: HttpClient) { }
 
   getPES() {
-    return this.http.get<Ipersonaexterna>(`${this.baseURL}/listarPE`);
+    return this.http.get<MensajeResponse>(`${this.baseURL}/listarPE`);
   }
 
   getPE(id_personaE: number) {
@@ -22,14 +23,14 @@ export class PersonaexternaService {
   }
 
   insertarPE(PersonaE: Ipersonaexterna) {
-    return this.http.post<Ipersonaexterna>(`${this.baseURL}/savePE`, PersonaE);
+    return this.http.post<MensajeResponse>(`${this.baseURL}/savePE`, PersonaE);
   }
 
   actualizarPE(PersonaE: Ipersonaexterna) {
-    return this.http.put<Ipersonaexterna>(`${this.baseURL}/updatePE`, PersonaE);
+    return this.http.put<MensajeResponse>(`${this.baseURL}/updatePE`, PersonaE);
   }
 
   eliminarPE(id_personaE: number) {
-    return this.http.delete(`${this.baseURL}/eliminarPE/${id_personaE}`);
+    return this.http.delete<MensajeResponse>(`${this.baseURL}/eliminarPE/${id_personaE}`);
   }
 }

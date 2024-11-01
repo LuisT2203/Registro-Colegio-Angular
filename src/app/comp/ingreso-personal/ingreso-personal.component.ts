@@ -9,6 +9,7 @@ import { PersonalColegio } from '../../model/personalcolegio';
 import { PersonalcolegioService } from '../../service/personalcolegio.service';
 import { Ipersonalcolegio } from '../../model/iPersonalColegio';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 @Component({
   selector: 'app-ingreso-personal',
@@ -61,10 +62,11 @@ export class IngresoPersonalComponent implements OnInit {
     this.service.listarIngresoPC(this.fechaBusqueda, this.idPersonal || undefined)
         .subscribe(
             (data: any) => {
-                this.ingresos1 = data;
+                this.ingresos1 = data.object;
             },
-            (error: Error) => {
-                console.error('Error al cargar los ingresos:', error);
+            error => {
+              console.error('Error al obtener los padres', error);
+              this.toastr.error(error.error, 'Error');
             }
         );
 }
@@ -103,26 +105,26 @@ export class IngresoPersonalComponent implements OnInit {
   agregarIPC() {
     if (this.insUpd) {
       this.service.insertarIPC(this.ingreso).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.cargarIngresos();
           this.resetForm();
-          this.toastr.success('Ingreso agregado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al agregar Ingreso:', error);
-          this.toastr.error('No se pudo agregar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     } else {
       this.service.actualizarIPC(this.ingreso).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
           this.cargarIngresos();
           this.resetForm();
-          this.toastr.success('Ingreso actualizado con éxito', 'Éxito');
+          this.toastr.success(resp.mensaje, 'Éxito');
         },
         (error) => {
-          console.error('Error al actualizar Ingreso:', error);
-          this.toastr.error('No se pudo actualizar el Ingreso. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al actualizar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     }
@@ -140,9 +142,9 @@ export class IngresoPersonalComponent implements OnInit {
   eliminar(ipc: Iingresopersonal) {
     if (confirm("¿Estás seguro de eliminar este empleado?")) {
         this.service.eliminarIPC(ipc.id_ingresoPersonal).subscribe(
-            () => {
+            (resp :MensajeResponse) => {
               this.cargarIngresos(); // Actualizar la lista después de eliminar
-                this.toastr.info('Ingreso Eliminado con éxito', 'Eliminado');
+              this.toastr.info(resp.mensaje, 'Eliminado');
             }
         );
     }
@@ -150,21 +152,21 @@ export class IngresoPersonalComponent implements OnInit {
 
   agregarPC()  {
       this.servicePC.insertarPC(this.personal).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
           this.resetForm();
-          this.toastr.success('Personal agregado con éxito', 'Éxito');
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPersonales();
         },
         (error) => {
-          console.error('Error al agregar personal:', error);
-          this.toastr.error('No se pudo agregar el personal. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
 }
 
 getPersonales(){
   this.servicePC.getPCS().subscribe(
-    (data:any)=>this.personales=data
+    (data:any)=>this.personales=data.object
   );
 }
 

@@ -5,6 +5,7 @@ import { Iencargo } from '../../model/iencargo';
 import { Encargo } from '../../model/encargo';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 @Component({
   selector: 'app-encargo',
@@ -43,7 +44,7 @@ export class EncargoComponent implements OnInit {
       this.service.listarEncargos(this.fechaBusqueda, this.encargoNom || undefined)
         .subscribe(
           (data: any) => {
-            this.encargos1 = data;
+            this.encargos1 = data.object;
           },
           (error: Error) => {
             console.error('Error al cargar los encargos:', error);
@@ -71,26 +72,26 @@ export class EncargoComponent implements OnInit {
     agregarEnc() {
       if (this.insUpd) {
         this.service.insertarEnc(this.encargo).subscribe(
-          (resp) => {
+          (resp:MensajeResponse) => {
             this.cargarEncargos();
             this.resetForm();
-            this.toastr.success('Encargo agregado con éxito', 'Éxito');
+            this.toastr.success(resp.mensaje, 'Éxito');
           },
           (error) => {
-            console.error('Error al agregar Encargo:', error);
-            this.toastr.error('No se pudo agregar el Encargo. Por favor, inténtelo de nuevo.', 'Error');
+            console.error('Error al agregar:', error);
+            this.toastr.error(error.error, 'Error');
           }
         );
       } else {
         this.service.actualizarEnc(this.encargo).subscribe(
-          (resp) => {
+          (resp:MensajeResponse) => {
             this.cargarEncargos();
             this.resetForm();
-            this.toastr.success('Encargo actualizado con éxito', 'Éxito');
+            this.toastr.success(resp.mensaje, 'Éxito');
           },
           (error) => {
-            console.error('Error al actualizar Encargo:', error);
-            this.toastr.error('No se pudo actualizar el Encargo. Por favor, inténtelo de nuevo.', 'Error');
+            console.error('Error al actualizar:', error);
+            this.toastr.error(error.error, 'Error');
           }
         );
       }
@@ -106,9 +107,13 @@ export class EncargoComponent implements OnInit {
     eliminar(enc: Iencargo) {
       if (confirm("¿Estás seguro de eliminar este empleado?")) {
           this.service.eliminarEnc(enc.id_enc).subscribe(
-              () => {
+              (resp :MensajeResponse) => {
                 this.cargarEncargos(); // Actualizar la lista después de eliminar
-                  this.toastr.info('Encargo Eliminado con éxito', 'Eliminado');
+                this.toastr.info(resp.mensaje, 'Eliminado');
+              },
+              (error) => {
+                console.error('Error al Eliminar:', error);
+                this.toastr.error(error.error, 'Error');
               }
           );
       }

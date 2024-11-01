@@ -2,19 +2,20 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Iencargo } from '../model/iencargo';
+import { MensajeResponse } from '../model/MensajeResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EncargoService {
 
-//  private baseURL = "http://localhost:8080/ControladorEncargo";
+  private baseURL = "http://localhost:8080/ControladorEncargo";
 
-  private baseURL = "https://registro-colegio.onrender.com/ControladorEncargo";
+ // private baseURL = "https://registro-colegio.onrender.com/ControladorEncargo";
 
   constructor(private http: HttpClient) { }
 
-  listarEncargos(fechaBusqueda?: string, encargoNom?: string): Observable<any[]> {
+  listarEncargos(fechaBusqueda?: string, encargoNom?: string): Observable<MensajeResponse> {
     let params = new HttpParams();
     if (fechaBusqueda) {
       params = params.set('fechaBusqueda', fechaBusqueda);
@@ -22,15 +23,15 @@ export class EncargoService {
     if (encargoNom) {
       params = params.set('encargoNom', encargoNom);
     }
-    return this.http.get<any[]>(`${this.baseURL}/listarEncargos`, { params });
+    return this.http.get<MensajeResponse>(`${this.baseURL}/listarEncargos`, { params });
   }
 
   insertarEnc(enc: Iencargo) {
-    return this.http.post<Iencargo>(`${this.baseURL}/saveEncargo`, enc);
+    return this.http.post<MensajeResponse>(`${this.baseURL}/saveEncargo`, enc);
   }
 
   actualizarEnc(enc: Iencargo) {
-    return this.http.put<Iencargo>(`${this.baseURL}/updateEncargo`, enc);
+    return this.http.put<MensajeResponse>(`${this.baseURL}/updateEncargo`, enc);
   }
 
   getEnc(id_enc: number) {
@@ -38,6 +39,6 @@ export class EncargoService {
   }
 
   eliminarEnc(id_enc: number) {
-    return this.http.delete<void>(`${this.baseURL}/eliminarE/${id_enc}`);
+    return this.http.delete<MensajeResponse>(`${this.baseURL}/eliminarE/${id_enc}`);
   }
 }

@@ -5,6 +5,7 @@ import { PersonalColegio } from '../../model/personalcolegio';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { MensajeResponse } from '../../model/MensajeResponse';
 
 
 @Component({
@@ -31,7 +32,13 @@ export class PersonalcolegioComponent implements OnInit {
 
   getPersonales(){
     this.service.getPCS().subscribe(
-      (data:any)=>this.personales=data
+      (data:any)=>{
+        this.personales=data.object
+      },
+      error => {
+        console.error('Error al obtener los personales', error);
+        this.toastr.error(error.error, 'Error');
+      }
     );
   }
   editar(pc: Ipersonalcolegio) {
@@ -48,26 +55,27 @@ export class PersonalcolegioComponent implements OnInit {
   agregar() {
     if (this.insUpd) {
       this.service.insertarPC(this.personal).subscribe(
-        (resp) => {
+        (resp: MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPersonales();
           this.resetForm();
-          this.toastr.success('Personal agregado con éxito', 'Éxito');
         },
         (error) => {
-          console.error('Error al agregar personal:', error);
-          this.toastr.error('No se pudo agregar el personal. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al agregar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     } else {
       this.service.actualizarPC(this.personal).subscribe(
-        (resp) => {
+        (resp:MensajeResponse) => {
+          this.toastr.success(resp.mensaje, 'Éxito');
           this.getPersonales();
           this.resetForm();
-          this.toastr.success('Personal actualizado con éxito', 'Éxito');
+
         },
         (error) => {
-          console.error('Error al actualizar personal:', error);
-          this.toastr.error('No se pudo actualizar el personal. Por favor, inténtelo de nuevo.', 'Error');
+          console.error('Error al actualizar:', error);
+          this.toastr.error(error.error, 'Error');
         }
       );
     }
@@ -84,9 +92,13 @@ export class PersonalcolegioComponent implements OnInit {
   eliminar(pc: Ipersonalcolegio) {
     if (confirm("¿Estás seguro de eliminar este empleado?")) {
         this.service.eliminarPC(pc.id_personal).subscribe(
-            () => {
+            (resp :MensajeResponse) => {
                 this.getPersonales(); // Actualizar la lista después de eliminar
-                this.toastr.info('Personal Eliminado con éxito', 'Eliminado');
+                this.toastr.info(resp.mensaje, 'Eliminado');
+            },
+            (error) => {
+              console.error('Error al Eliminar:', error);
+              this.toastr.error(error.error, 'Error');
             }
         );
     }

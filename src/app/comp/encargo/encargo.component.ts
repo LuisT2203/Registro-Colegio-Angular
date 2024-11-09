@@ -44,7 +44,7 @@ export class EncargoComponent implements OnInit {
       this.service.listarEncargos(this.fechaBusqueda, this.encargoNom || undefined)
         .subscribe(
           (data: any) => {
-            this.encargos1 = data.object;
+            this.encargos1 = data?.object || [];
           },
           (error: Error) => {
             console.error('Error al cargar los encargos:', error);

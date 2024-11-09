@@ -92,6 +92,42 @@
     </div>
 
     <h2 class="text-center mb-4">Lista de Personas</h2>
+    <div class="buscar" >
+			<div class="container1" style=" margin-left: 20px;margin-right: 20px;">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorId()">
+							<div class="form-group">
+								<label for="idPersonaE">Buscar por nombre</label>
+								<ng-select  [(ngModel)]="idPersonaE" name="idPersonaE"  >
+                  @for (p of personas; track p.id_personaE){
+                    <ng-option [value]="p.id_personaE">{{p.nombre_personaE}} {{p.apellido_personaE}}
+                      {{p.dni}}
+                    </ng-option>
+                    }
+                  </ng-select>
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="container2" style=" margin-right: auto;">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorFecha()">
+							<div class="form-group">
+								<label for="fechaBusqueda">Ingrese la fecha</label>
+								<input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
+									required />
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
     <div class="table-title">
       <div class="row">
@@ -114,43 +150,6 @@
       </div>
     </div>
 
-
-    <div clas="buscar" style="display: flex">
-			<div class="container1">
-				<div class="row justify-content-start">
-					<div class="col-md-6-start">
-						<form (ngSubmit)="buscarPorId()">
-							<div class="form-group">
-								<label for="idPersonaE">Buscar por nombre</label>
-								<ng-select  [(ngModel)]="idPersonaE" name="idPersonaE"  >
-                  @for (p of personas; track p.id_personaE){
-                    <ng-option [value]="p.id_personaE">{{p.nombre_personaE}} {{p.apellido_personaE}}
-                      {{p.dni}}
-                    </ng-option>
-                    }
-                  </ng-select>
-							</div>
-							<button type="submit" class="btn btn-primary">Buscar</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="container2">
-				<div class="row justify-content-start">
-					<div class="col-md-6-start">
-						<form (ngSubmit)="buscarPorFecha()">
-							<div class="form-group">
-								<label for="fechaBusqueda">Ingrese la fecha</label>
-								<input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
-									required />
-							</div>
-							<button type="submit" class="btn btn-primary">Buscar</button>
-
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
     <table class="table table-striped">
       <thead class="table-dark">
         <tr>
@@ -169,9 +168,9 @@
           <td>{{ipe.numeroRegistro}}</td>
           <td>{{ipe.personaE.nombre_personaE}} {{ipe.personaE.apellido_personaE}} {{ipe.personaE.dni}}
           </td>
-          <td>{{ipe.fecha}}</td>
-          <td>{{ipe.hora_ingreso}}</td>
-          <td>{{ipe.hora_salida}}</td>
+          <td><label class="badge badge-primary-soft"><i class="bi bi-calendar-fill"></i>{{ipe.fecha}}</label></td>
+          <td><label class="badge badge-primary-soft"><i class="bi bi-clock-fill"></i>{{ipe.hora_ingreso}}</label></td>
+          <td><label class="badge badge-primary-soft"><i class="bi bi-clock-fill"></i>{{ipe.hora_salida}}</label></td>
           <td>{{ipe.asunto}}</td>
           <td>
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#personalModal1"

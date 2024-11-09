@@ -32,7 +32,7 @@ export class PpffComponent implements OnInit {
   getPpffs(){
     this.service.getPPFFS().subscribe(
       (data:any)=>{
-        this.ppffs=data.object
+        this.ppffs=data?.object || [];
       },
       error => {
         console.error('Error al obtener los padres', error);

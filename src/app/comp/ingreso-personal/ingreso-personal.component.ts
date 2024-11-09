@@ -61,9 +61,20 @@ export class IngresoPersonalComponent implements OnInit {
 
     this.service.listarIngresoPC(this.fechaBusqueda, this.idPersonal || undefined)
         .subscribe(
-            (data: any) => {
+            (data: MensajeResponse) => {
+              if (data && data.object) { // Validación de que data y data.object existen
                 this.ingresos1 = data.object;
-            },
+
+                if (this.ingresos1.length === 0) {
+                  // Mostrar mensaje si no hay registros tras el filtro
+                  this.toastr.info(data.mensaje, 'Información');
+              }
+            } else {
+              // Manejar el caso en que no se encontró ningún dato
+              this.toastr.info(data.mensaje, 'Información');
+              this.ingresos1 = []; // Asegurarse de que ingresos1 esté vacío
+          }
+        },
             error => {
               console.error('Error al obtener los padres', error);
               this.toastr.error(error.error, 'Error');

@@ -90,8 +90,7 @@
       <img src="/assets/static/images/p.png" alt="profileImg">
     </div>
     <div class="name-job">
-      <div sec:authentication="name" class="profile_name"></div>
-
+      <div *ngIf="authService.getUserEmail()" class="profile_name"><span class="small-text">Bienvenido<br>{{authService.getUserEmail()}}</span></div>
     </div>
 
     <form   method="POST" id="logoutForm">

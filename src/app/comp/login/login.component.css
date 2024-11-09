@@ -5,6 +5,7 @@
 	margin: 0;
 	padding: 0;
 	font-family: Raleway, sans-serif;
+  user-select: none; /* no deja seleccionar ni que se marque la barra de escribir  */
 }
 
 .body {

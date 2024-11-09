@@ -4,6 +4,7 @@
   height: 100vh; /* Usa 'vh' para asegurarte de que ocupe toda la altura de la ventana */
   width: 100vw;  /* Usa 'vw' para ocupar toda la anchura de la ventana */
   overflow-y: auto;
+  user-select: none; /* no deja seleccionar ni que se marque la barra de escribir  */
 
 }
 

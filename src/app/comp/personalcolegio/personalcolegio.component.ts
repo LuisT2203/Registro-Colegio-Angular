@@ -33,7 +33,7 @@ export class PersonalcolegioComponent implements OnInit {
   getPersonales(){
     this.service.getPCS().subscribe(
       (data:any)=>{
-        this.personales=data.object
+        this.personales=data?.object || [];
       },
       error => {
         console.error('Error al obtener los personales', error);

@@ -48,7 +48,7 @@ export class InicioComponent implements OnInit {
     this.service.listarIngresoPC(this.fechaBusqueda, this.idPersonal || undefined)
         .subscribe(
             (data: any) => {
-                this.ingresos1 = data.object;
+                this.ingresos1 = data?.object || [];
             },
             (error: Error) => {
                 console.error('Error al cargar los ingresos:', error);
@@ -68,7 +68,7 @@ cargarIngresosPE(): void {
   this.servicePE.listarIngresoPE(this.fechaBusqueda, this.idPersonaE || undefined)
     .subscribe(
       (data: any) => {
-        this.ingresos2 = data.object;
+        this.ingresos2 = data?.object || [];
       },
       (error: Error) => {
         console.error('Error al cargar los ingresos:', error);
@@ -88,7 +88,7 @@ cargarIngresosPadres(): void {
   this.servicePF.listarIngresoPF(this.fechaBusqueda, this.idPadre || undefined)
     .subscribe(
       (data: any) => {
-        this.ingresos3 = data.object;
+        this.ingresos3 = data?.object || [];
       },
       (error: Error) => {
         console.error('Error al cargar los ingresos:', error);
@@ -107,7 +107,7 @@ cargarEncargos(): void{
   this.serviceEn.listarEncargos(this.fechaBusqueda, this.encargoNom || undefined)
     .subscribe(
       (data: any) => {
-        this.encargos1 = data.object;
+        this.encargos1 = data?.object || [];
       },
       (error: Error) => {
         console.error('Error al cargar los encargos:', error);

@@ -31,7 +31,7 @@ export class PersonaexternaComponent implements OnInit {
   getPersonas(){
     this.service.getPES().subscribe(
       (data:any)=>{
-        this.personas=data.object
+        this.personas=data?.object || [];
       },
       error => {
         console.error('Error al obtener los padres', error);

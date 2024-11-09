@@ -223,7 +223,6 @@ body{
 .home-section{
   position: relative;
   background: #ffffff;
-  height: 20vh;
   left: 250px;
   width: calc(100% - 40px);
   transition: all 0.3s ease;

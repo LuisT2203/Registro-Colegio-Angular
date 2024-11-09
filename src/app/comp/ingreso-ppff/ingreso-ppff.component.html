@@ -103,6 +103,42 @@
     </div>
 
     <h2 class="text-center mb-4">Lista de Padres</h2>
+    <div class="buscar">
+			<div class="container1" style=" margin-left: 20px;margin-right: 20px;">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorId()">
+							<div class="form-group">
+								<label for="idPadre">Buscar por nombre</label>
+								<ng-select [(ngModel)]="idPadre" name="idPadre"   >
+                  @for (p of padres; track p.id_ppff){
+                    <ng-option [value]="p.id_ppff">{{p.nombre_ppff}} {{p.apellido_ppff}}
+                      {{p.dni}} {{p.nombre_alu}} {{p.apellido_alu}} {{p.anio_alu}}
+                    </ng-option>
+                    }
+                </ng-select>
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="container2" style=" margin-right: auto;">
+				<div class="row justify-content-start">
+					<div class="col-md-6-start">
+						<form (ngSubmit)="buscarPorFecha()">
+							<div class="form-group">
+								<label for="fechaBusqueda">Ingrese la fecha</label>
+								<input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
+									required />
+							</div>
+							<button type="submit" class="btn btn-primary">Buscar</button>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 
     <div class="table-title">
       <div class="row">
@@ -125,43 +161,6 @@
       </div>
     </div>
 
-
-    <div clas="buscar" style="display: flex">
-			<div class="container1">
-				<div class="row justify-content-start">
-					<div class="col-md-6-start">
-						<form (ngSubmit)="buscarPorId()">
-							<div class="form-group">
-								<label for="idPadre">Buscar por nombre</label>
-								<ng-select [(ngModel)]="idPadre" name="idPadre"   >
-                  @for (p of padres; track p.id_ppff){
-                    <ng-option [value]="p.id_ppff">{{p.nombre_ppff}} {{p.apellido_ppff}}
-                      {{p.dni}} {{p.nombre_alu}} {{p.apellido_alu}} {{p.anio_alu}}
-                    </ng-option>
-                    }
-                </ng-select>
-							</div>
-							<button type="submit" class="btn btn-primary">Buscar</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="container2">
-				<div class="row justify-content-start">
-					<div class="col-md-6-start">
-						<form (ngSubmit)="buscarPorFecha()">
-							<div class="form-group">
-								<label for="fechaBusqueda">Ingrese la fecha</label>
-								<input type="date" class="form-control" [(ngModel)]="fechaBusqueda" id="fechaBusqueda" name="fechaBusqueda"
-									required />
-							</div>
-							<button type="submit" class="btn btn-primary">Buscar</button>
-
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
     <table class="table table-striped">
       <thead class="table-dark">
         <tr>
@@ -181,15 +180,15 @@
           <td>{{ipf.padre.nombre_ppff}} {{ipf.padre.apellido_ppff}} {{ipf.padre.dni}} {{ipf.padre.nombre_alu}}
             {{ipf.padre.apellido_alu}} {{ipf.padre.anio_alu}}
           </td>
-          <td>{{ipf.fecha}}</td>
-          <td>{{ipf.hora_ingreso}}</td>
-          <td>{{ipf.hora_salida}}</td>
+          <td><label class="badge badge-primary-soft"><i class="bi bi-calendar-fill"></i>{{ipf.fecha}}</label></td>
+          <td><label class="badge badge-primary-soft"><i class="bi bi-clock-fill"></i>{{ipf.hora_ingreso}}</label></td>
+          <td><label class="badge badge-primary-soft"><i class="bi bi-clock-fill"></i>{{ipf.hora_salida}}</label></td>
           <td>{{ipf.asunto}}</td>
           <td>
             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#personalModal1"
                     (click)="editar(ipf)">
               <i class="bi bi-pencil"></i>
-            </button>
+            </button>&nbsp;
             <button class="btn btn-danger" (click)="eliminar(ipf)">
               <i class="bi bi-trash"></i>
             </button>

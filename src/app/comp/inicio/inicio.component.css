@@ -1,5 +1,9 @@
 .mt-4{
-  margin-top: 100px !important
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si es necesario */
+  flex-direction: column;
+  margin-top: 100px !important;
+  margin-left: 240px;
 }
 .text-morado {
   color: #f30497; /* Código de color morado */

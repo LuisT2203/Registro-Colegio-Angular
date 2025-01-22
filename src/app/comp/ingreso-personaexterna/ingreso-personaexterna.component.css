@@ -1,8 +1,9 @@
-.container mt-4{
-	display: flex;
-	flex-wrap: wrap;
-  margin-top: -100; /* Cambia esto a 0 o un valor menor para reducir el espacio */
-  padding-top: 20px;
+.container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea si es necesario */
+  flex-direction: column; /* Alinea los elementos verticalmente */
+  margin-left: 110px;
+
 }
 .table-title {
     background:#23282b;

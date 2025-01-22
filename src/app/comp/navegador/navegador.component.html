@@ -1,6 +1,38 @@
 <link rel="stylesheet" href="/assets/static/css/style2.css">
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+<style>
+  .navbar {
+    background-color: #1d1b31; /* Cambia el color según tu diseño */
+  }
+  .navbar .user-info {
+    color: #fff; /* Texto en blanco */
+  }
+  .user-icon {
+    margin-right: 5px;
+  }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <!-- Espacio en blanco a la izquierda -->
+    <div class="ms-auto">
+      <div class="user-info d-flex align-items-center">
+        <div sec:authorize="isAuthenticated()" class="profile-details">
+          <div class="profile-content">
+            <img src="/assets/static/images/p.png" alt="profileImg">
+          </div>
+          <div class="name-job">
+            <div *ngIf="authService.getUserEmail()" class="profile_name"><span class="small-text">Bienvenido<br>{{authService.getUserEmail()}}</span></div>
+          </div>
 
+          <form   method="POST" id="logoutForm">
+            <i (click)="logout()" class='bx bx-log-out'></i>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
 <div class="sidebar close" [ngClass]="{'close': isSidebarClosed}">
   <br>
   <div class="logo-details">
@@ -85,19 +117,7 @@
       </ul>
     </li>
     <li>
-  <div sec:authorize="isAuthenticated()" class="profile-details">
-    <div class="profile-content">
-      <img src="/assets/static/images/p.png" alt="profileImg">
-    </div>
-    <div class="name-job">
-      <div *ngIf="authService.getUserEmail()" class="profile_name"><span class="small-text">Bienvenido<br>{{authService.getUserEmail()}}</span></div>
-    </div>
-
-    <form   method="POST" id="logoutForm">
-      <i (click)="logout()" class='bx bx-log-out'></i>
-    </form>
-
-  </div>
+  
 </li>
 </ul>
 </div>

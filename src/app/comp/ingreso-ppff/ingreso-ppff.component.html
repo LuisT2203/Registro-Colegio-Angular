@@ -177,8 +177,8 @@
         @for (ipf of ingresos1; track ipf.id_ingresoPPFF){
         <tr>
           <td>{{ipf.numeroRegistro}}</td>
-          <td>{{ipf.padre.nombre_ppff}} {{ipf.padre.apellido_ppff}} {{ipf.padre.dni}} {{ipf.padre.nombre_alu}}
-            {{ipf.padre.apellido_alu}} {{ipf.padre.anio_alu}}
+          <td>{{ipf.padre.nombre_ppff}} {{ipf.padre.apellido_ppff}} {{ipf.padre.dni}}({{ipf.padre.nombre_alu}}
+            {{ipf.padre.apellido_alu}} {{ipf.padre.anio_alu}})
           </td>
           <td><label class="badge badge-primary-soft"><i class="bi bi-calendar-fill"></i>{{ipf.fecha}}</label></td>
           <td><label class="badge badge-primary-soft"><i class="bi bi-clock-fill"></i>{{ipf.hora_ingreso}}</label></td>

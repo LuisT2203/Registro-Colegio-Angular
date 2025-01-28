@@ -20,25 +20,29 @@
       <div class="col-md-6 col-lg-4">
         <div class="login-wrap p-0">
 
-          <form  >
+          <form #PersonalForm="ngForm" (ngSubmit)="save(); PersonalForm.reset()" >
+            <div class="form-group">
+
+              <input type="text" [(ngModel)]="usuario.id" name="id"  id="id" class="form-control"  type="hidden" >
+            </div>
             <div class="form-group">
               <label>Usuario</label>
-              <input type="text" [(ngModel)]="usuario" [ngModelOptions]="{standalone: true}" id="email" class="form-control"  placeholder="Usuario" >
+              <input type="text" [(ngModel)]="usuario.usuario" name="usuario"  id="usuario" class="form-control"  placeholder="Usuario" >
             </div>
 
             <div class="form-group">
               <label>Tipo</label>
-              <input type="text" [(ngModel)]="tipo" [ngModelOptions]="{standalone: true}" id="tipe" class="form-control"  placeholder="Tipo" >
+              <input type="text" [(ngModel)]="usuario.tipo" name="tipo"  id="tipe" class="form-control"  placeholder="Tipo" >
             </div>
 
 
             <div class="form-group">
               <label>Clave</label>
-              <input type="password" [(ngModel)]="clave" [ngModelOptions]="{standalone: true}" id="password" class="form-control"  placeholder="Clave" >
+              <input type="password" [(ngModel)]="usuario.clave" name="clave"  id="clave" class="form-control"  placeholder="Clave" >
             </div>
 
             <div class="form-group">
-              <button type="submit" class="form-control btn btn-primary submit px-3" (click)="save()">Registrar</button>
+              <button type="submit" class="form-control btn btn-primary submit px-3">Registrar</button>
             </div>
 
           </form>

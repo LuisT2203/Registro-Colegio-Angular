@@ -10,8 +10,8 @@ import { MensajeResponse } from '../model/MensajeResponse';
 export class IngresopersonaexternaService {
 
 
- // private baseURL = "https://registro-colegio.onrender.com/ControladorPE";
-  private baseURL = "http://localhost:8080/ControladorPE";
+  private baseURL = "https://registro-colegio.onrender.com/ControladorPE";
+ // private baseURL = "http://localhost:8080/ControladorPE";
 
   constructor(private http: HttpClient) { }
 
@@ -40,5 +40,8 @@ export class IngresopersonaexternaService {
 
   eliminarIPE(id_ingresoPersonaE: number) {
     return this.http.delete<MensajeResponse>(`${this.baseURL}/eliminarIPE/${id_ingresoPersonaE}`);
+  }
+  exportPdfById(id_personaE: number): Observable<Blob> {
+    return this.http.get(`${this.baseURL}/export-pdf/${id_personaE}`, { responseType: 'blob' });
   }
 }

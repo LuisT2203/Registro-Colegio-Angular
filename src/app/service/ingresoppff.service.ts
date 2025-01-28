@@ -9,9 +9,9 @@ import { MensajeResponse } from '../model/MensajeResponse';
 })
 export class IngresoppffService {
 
- //  private baseURL = "https://registro-colegio.onrender.com/ControladorPPFF";
+  private baseURL = "https://registro-colegio.onrender.com/ControladorPPFF";
 
- private baseURL = "http://localhost:8080/ControladorPPFF";
+// private baseURL = "http://localhost:8080/ControladorPPFF";
 
   constructor(private http: HttpClient) { }
 
@@ -40,5 +40,8 @@ export class IngresoppffService {
 
   eliminarIPF(id_ingresoPPFF: number) {
     return this.http.delete<MensajeResponse>(`${this.baseURL}/eliminarIPPFF/${id_ingresoPPFF}`);
+  }
+  exportPdfById(id_ppff: number): Observable<Blob> {
+    return this.http.get(`${this.baseURL}/export-pdf/${id_ppff}`, { responseType: 'blob' });
   }
 }

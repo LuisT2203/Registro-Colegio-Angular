@@ -9,9 +9,9 @@ import { MensajeResponse } from '../model/MensajeResponse';
 })
 export class EncargoService {
 
-  private baseURL = "http://localhost:8080/ControladorEncargo";
+ // private baseURL = "http://localhost:8080/ControladorEncargo";
 
- // private baseURL = "https://registro-colegio.onrender.com/ControladorEncargo";
+ private baseURL = "https://registro-colegio.onrender.com/ControladorEncargo";
 
   constructor(private http: HttpClient) { }
 

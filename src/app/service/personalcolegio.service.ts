@@ -8,9 +8,9 @@ import { MensajeResponse } from '../model/MensajeResponse';
   providedIn: 'root'
 })
 export class PersonalcolegioService {
-//  private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
+  private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
 
-  private baseURL = "http://localhost:8080/ControladorPC";
+  //private baseURL = "http://localhost:8080/ControladorPC";
 
   constructor(private http: HttpClient) { }
 

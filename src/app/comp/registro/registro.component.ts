@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
-import { Usuario, UsuarioService } from '../../service/usuario.service';
+import { UsuarioService } from '../../service/usuario.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Usuario } from '../../model/Usuario';
+import { MensajeResponse } from '../../model/MensajeResponse';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registro',
   standalone: true,
   imports: [CommonModule,
-    FormsModule,HttpClientModule ],
+    FormsModule,HttpClientModule,NgFor],
   templateUrl: './registro.component.html',
   styleUrl: './registro.component.css'
 })
@@ -18,27 +21,22 @@ export class RegistroComponent {
   isResultLoaded=false;
   isUpdateFormActive=false;
 
-  usuario: string ="";
-  tipo : string ="";
-  clave: string ="";
+  usuario = new Usuario();
 
-  constructor(private http: HttpClient) {}
+  constructor( private service : UsuarioService,
+      private toastr: ToastrService) {}
 
- save(){
-
-  let bodyData={
-    "usuario" : this.usuario,
-    "tipo" : this.tipo,
-    "clave" :this.clave
-  };
- // this.http.post("https://registro-colegio.onrender.com/api/usuario/save",bodyData,{responseType:'text'}).subscribe((resultData:any)=>
-this.http.post("http://localhost:8080/api/usuario/save",bodyData,{responseType:'text'}).subscribe((resultData:any)=>
-    {
-      console.log(resultData);
-      alert("Usuario Registrado con Exito");
-    });
-
- }
+ save() {
+    this.service.registrarUsuario(this.usuario).subscribe(
+      (resp:MensajeResponse)=>{
+        this.toastr.success(resp.mensaje, 'Éxito');
+      },
+      (error) => {
+        console.error('Error al agregar:', error);
+        this.toastr.error(error.error, 'Error');
+      }
+    )
+  }
 
 
 }

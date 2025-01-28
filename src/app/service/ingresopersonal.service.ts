@@ -9,9 +9,9 @@ import { MensajeResponse } from '../model/MensajeResponse';
 })
 export class IngresopersonalService {
 
- //  private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
+   private baseURL = "https://registro-colegio.onrender.com/ControladorPC";
 
-  private baseURL = "http://localhost:8080/ControladorPC";
+ // private baseURL = "http://localhost:8080/ControladorPC";
 
   constructor(private http: HttpClient) { }
 
@@ -40,5 +40,8 @@ export class IngresopersonalService {
 
   eliminarIPC(id_ingresoPersonal: number) {
     return this.http.delete<MensajeResponse>(`${this.baseURL}/eliminarIPC/${id_ingresoPersonal}`);
+  }
+  exportPdfById(id_personal: number): Observable<Blob> {
+    return this.http.get(`${this.baseURL}/export-pdf/${id_personal}`, { responseType: 'blob' });
   }
 }

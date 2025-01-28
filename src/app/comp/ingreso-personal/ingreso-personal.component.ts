@@ -180,5 +180,21 @@ getPersonales(){
     (data:any)=>this.personales=data.object
   );
 }
+descargarPdf(id_personal: number) {
+  console.log('ID Personal recibido:', id_personal);
+  if (!id_personal) {
+    console.error('ID Personal no definido');
+    return;
+  }
+  this.service.exportPdfById(id_personal).subscribe((data: Blob) => {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ReportePersonal_${id_personal}.pdf`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  });
+}
 
 }
